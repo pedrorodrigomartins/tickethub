@@ -1,0 +1,56 @@
+package dev.pedrorodrigo.tickethub.user.entity;
+
+import dev.pedrorodrigo.tickethub.event.entity.Event;
+import dev.pedrorodrigo.tickethub.user.enums.UserType;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "users")
+public class User {
+
+    @Id
+    @Setter(AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 150, nullable = false)
+    private String name;
+
+    @Column(name = "password_hash", nullable = false, length = 50)
+    private String passwordHash;
+
+    @Column(length = 200, nullable = false, unique = true)
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type", nullable = false)
+    private UserType userType = UserType.CUSTOMER;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id", nullable = false)
+    private Event event;
+
+    @Setter(AccessLevel.NONE)
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+}
