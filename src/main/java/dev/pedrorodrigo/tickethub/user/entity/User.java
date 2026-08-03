@@ -3,6 +3,7 @@ package dev.pedrorodrigo.tickethub.user.entity;
 import dev.pedrorodrigo.tickethub.event.entity.Event;
 import dev.pedrorodrigo.tickethub.user.enums.UserType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,7 @@ public class User {
     @Column(name = "password_hash", nullable = false, length = 50)
     private String passwordHash;
 
+    @Email
     @Column(length = 200, nullable = false, unique = true)
     private String email;
 
@@ -41,6 +43,7 @@ public class User {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Setter(AccessLevel.NONE)
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
