@@ -1,5 +1,6 @@
 package dev.pedrorodrigo.tickethub.user.entity;
 
+import dev.pedrorodrigo.tickethub.common.persistence.AuditableEntity;
 import dev.pedrorodrigo.tickethub.event.entity.Event;
 import dev.pedrorodrigo.tickethub.user.enums.UserType;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends AuditableEntity {
 
     @Id
     @Setter(AccessLevel.NONE)
@@ -39,21 +40,4 @@ public class User {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
-    @Setter(AccessLevel.NONE)
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Setter(AccessLevel.NONE)
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 }
