@@ -35,7 +35,7 @@ public class TicketType extends AuditableEntity {
     @Column(length = 50, nullable = false)
     private String code;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
     @Column(nullable = false)
